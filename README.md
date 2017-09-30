@@ -6,7 +6,7 @@ The packages generated with this **conanfile** can be found in [Bintray](https:/
 
 ## For Users: Use this package
 
-## Conan "latest" version convention
+### Conan "latest" version convention
 
 Abseil has a unique versioning philosophy, so this package offers a unique versioning option on the packages by using a "conan alias" named "latest". 
 
