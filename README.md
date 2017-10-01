@@ -20,11 +20,11 @@ If you handle multiple dependencies in your project is better to add a *conanfil
     [generators]
     txt
 
-Complete the installation of requirements for your project running:</small></span>
+Complete the installation of requirements for your project running:
 
     $ mkdir build && cd build && conan install ..
 	
-Note: It is recommended that you run conan install from a build directory and not the root of the project directory.  This is because conan generates *conanbuildinfo* files specific to a single build configuration which by default comes from an autodetected default profile located in ~/.conan/profiles/default .  If you pass different build configuration options to conan install, it will generate different *conanbuildinfo* files.  Thus, they shoudl not be added to the root of the project, nor committed to git. 
+Note: It is recommended that you run conan install from a build directory and not the root of the project directory.  This is because conan generates *conanbuildinfo* files specific to a single build configuration which by default comes from an autodetected default profile located in ~/.conan/profiles/default .  If you pass different build configuration options to conan install, it will generate different *conanbuildinfo* files.  Thus, they should not be added to the root of the project, nor committed to git. 
 
 ## For Packagers: Publish this Package
 
@@ -44,5 +44,3 @@ The following command both runs all the steps of the conan file, and publishes t
 
     $ conan upload Bazel/0.6.0@bincrafters/testing --all -r bincrafters
 	
-### License
-[Apache License 2.0](LICENSE)
