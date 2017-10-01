@@ -8,14 +8,14 @@ The packages generated with this **conanfile** can be found in [Bintray](https:/
 
 ### Basic setup
 
-    $ conan install Bazel/0.6.0@bincrafters/stable
+    $ conan install bazel_installer/0.6.0@bincrafters/stable
 
 ### Project setup
 
 If you handle multiple dependencies in your project is better to add a *conanfile.txt*
 
     [requires]
-    Bazel/0.6.0@bincrafters/stable
+    bazel_installer/0.6.0@bincrafters/stable
 
     [generators]
     txt
@@ -42,5 +42,5 @@ The following command both runs all the steps of the conan file, and publishes t
 
 ## Upload
 
-    $ conan upload Bazel/0.6.0@bincrafters/stable --all -r bincrafters
+    $ conan upload bazel_installer/0.6.0@bincrafters/stable --all -r bincrafters
 	
