@@ -1,58 +1,38 @@
 from conans import ConanFile, tools, os
 from conans.tools import os_info, SystemPackageTool, ChocolateyTool
 
-class AbseilConan(ConanFile):
-    name = "Abseil"
-    version = "09302017"
+class BazelConan(ConanFile):
+    name = "Bazel"
+    version = "0.6.0"
     settings = "os", "arch", "compiler", "build_type"
-    url = "https://github.com/bincrafters/conan-abseil"
+    url = "https://github.com/bincrafters/conan-bazel"
     description = "Abseil Common Libraries (C++) from Google"
-    license = "https://github.com/abseil/abseil-cpp/blob/master/LICENSE"
-    default_options = "shared=False"
-    options = {"shared": [True, False]}
+    license = "https://github.com/bazelbuild/bazel/blob/master/LICENSE"
+    options = {"shared": [True, False], "with_msys2":  [True, False], "with_java": [True, False]}
+    default_options = "shared=False", "with_msys2=False", "with_bazel=False", "with_java=False"
  
-    def system_requirements(self):
-        package_name = "bazel"
-        if os_info.is_windows:
-            installer = SystemPackageTool(tool=ChocolateyTool())
-            installer.install(" ".join(["msys2", package_name]))
-        elif os_info.linux_distro == "ubuntu":
-            tools.save("/etc/apt/sources.list.d/bazel.list", "deb [arch=amd64] http://storage.googleapis.com/bazel-apt stable jdk1.8")
-            keyfile = "bazel-release.pub.gpg"
-            if os.path.isfile(keyfile): 
-                os.remove(keyfile)
-            tools.download("https://bazel.build/bazel-release.pub.gpg", keyfile)
-            self.run("apt-key add " + keyfile)
-            installer = SystemPackageTool()
-            installer.install(" ".join(["openjdk-8-jdk", package_name]))
-        elif os_info.is_macos:
-            installer = SystemPackageTool()
-            installer.install(" ".join(["java8", package_name]))            
-        
+    def requirements(self):
+        if self.options.with_msys2:
+            self.requires("msys2_installer/latest@bincrafters/testing")
+            
+        if self.options.with_java:
+            self.requires("java_installer/latest@bincrafters/testing")
+       
     def source(self):
-        source_url = "https://github.com/abseil/abseil-cpp"
-        self.run("git clone --depth=1 {0}.git".format(source_url))
+        source_url = "https://github.com/bazelbuild/bazel"
+        tools.get("{0}/archive/{1}.tar.gz".format(source_url, self.version))
         
     def build(self):
-        with tools.chdir("./abseil-cpp"):
+        with tools.chdir("bazel-{0}".format(self.version)):
             if os_info.is_windows:
-                if str(self.settings.arch) == "x86":
-                    self.output.info("using 32bit for bazel")
-                    self.run("bazel build --cpu=x86_windows_msvc absl/...:all")
-                else:
-                    self.output.info("using 64bit for bazel")
-                    self.run("bazel build --cpu=x64_windows_msvc absl/...:all")
+                self.run("./compile.sh")
             else: 
-                self.run("bazel build absl/...:all")
+                self.run("bash ./compile.sh")
                     
     def package(self):
-        self.copy("*.h", dst="include")
-        self.copy("*.lib", dst="lib", keep_path=False)
-        self.copy("*.dll", dst="bin", keep_path=False)
-        self.copy("*.dylib*", dst="lib", keep_path=False)
-        self.copy("*.so", dst="lib", keep_path=False)
-        self.copy("*.a", dst="lib", keep_path=False, symlinks=True)
+        self.copy("bazel.exe", dst="bin", src="output")
+        self.copy("bazel", dst="bin", src="output")
 
     def package_info(self):
-        tools.collect_libs(self)
+        self.env_info.path.append(self.cpp_info.bindirs)
 
