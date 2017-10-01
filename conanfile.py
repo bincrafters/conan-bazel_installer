@@ -1,10 +1,10 @@
 from conans import ConanFile, tools, os
 from conans.tools import os_info
 
-class BazelConan(ConanFile):
-    name = "Bazel"
+class BazelInstallerConan(ConanFile):
+    name = "bazel_installer"
     version = "0.6.0"
-    url = "https://github.com/bincrafters/conan-bazel"
+    url = "https://github.com/bincrafters/conan-bazel_installer"
     description = "Abseil Common Libraries (C++) from Google"
     license = "https://github.com/bazelbuild/bazel/blob/master/LICENSE"
     no_copy_source = True

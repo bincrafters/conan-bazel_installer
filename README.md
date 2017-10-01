@@ -2,20 +2,20 @@
 
 [Conan.io](https://conan.io) package for [Bazel](https://github.com/bazelbuild/bazel) project
 
-The packages generated with this **conanfile** can be found in [Bintray](https://bintray.com/bincrafters/public-conan/Bazel%3Abincrafters).
+The packages generated with this **conanfile** can be found in [Bintray](https://bintray.com/bincrafters/public-conan/bazel_installer%3Abincrafters).
 
 ## For Users: Use this package
 
 ### Basic setup
 
-    $ conan install Bazel/0.6.0@bincrafters/testing
+    $ conan install bazel_installer/0.6.0@bincrafters/testing
 
 ### Project setup
 
 If you handle multiple dependencies in your project is better to add a *conanfile.txt*
 
     [requires]
-    Bazel/0.6.0@bincrafters/testing
+    bazel_installer/0.6.0@bincrafters/testing
 
     [generators]
     txt
@@ -42,5 +42,5 @@ The following command both runs all the steps of the conan file, and publishes t
 
 ## Upload
 
-    $ conan upload Bazel/0.6.0@bincrafters/testing --all -r bincrafters
+    $ conan upload bazel_installer/0.6.0@bincrafters/testing --all -r bincrafters
 	
