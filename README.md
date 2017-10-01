@@ -8,14 +8,14 @@ The packages generated with this **conanfile** can be found in [Bintray](https:/
 
 ### Basic setup
 
-    $ conan install Bazel/0.6.0@bincrafters/testing
+    $ conan install Bazel/0.6.0@bincrafters/stable
 
 ### Project setup
 
 If you handle multiple dependencies in your project is better to add a *conanfile.txt*
 
     [requires]
-    Bazel/0.6.0@bincrafters/testing
+    Bazel/0.6.0@bincrafters/stable
 
     [generators]
     txt
@@ -34,7 +34,7 @@ The example below shows the commands used to publish to bincrafters conan reposi
 
 The following command both runs all the steps of the conan file, and publishes the package to the local system cache.  This includes downloading dependencies from `build_requires` and `requires` , and then running the `build()` method. 
 
-    $ conan create bincrafters/testing
+    $ conan create bincrafters/stable
 	
 ## Add Remote
 
@@ -42,5 +42,5 @@ The following command both runs all the steps of the conan file, and publishes t
 
 ## Upload
 
-    $ conan upload Bazel/0.6.0@bincrafters/testing --all -r bincrafters
+    $ conan upload Bazel/0.6.0@bincrafters/stable --all -r bincrafters
 	
