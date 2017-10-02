@@ -18,8 +18,9 @@ This package has the following custom package options:
 |----------------|--------------------|-------------------|------------------
 |All				|with_jdk	        | False                | True/False         
 
+`with_jdk` - If set to `True`, the package will download the Bazel binary containing an embedded JDK.  While more convenient if you do not have Java installed, this adds approximately 60-70 MB to it's size which is inefficient if you already have Java installed.  The current default is `False` which means you must have an appropriate version of the JDK pre-installed for Bazel to work.  Conan options can be set in multiple places such as *conanfile.txt* and *conanfile.py*, or passed at the CLI when running `conan install ..`, for example:  
 
-`with_jdk` - If set to true, the package will download the Bazel binary containing an embedded JDK.  This adds approximately 60-70 MB to it's size. 
+    $ conan install bazel_installer/0.6.0@bincrafters/testing -o bazel_installer:with_jdk=True
 
 The complete list of Bazel binaries can be found here:  https://github.com/bazelbuild/bazel/releases
 
