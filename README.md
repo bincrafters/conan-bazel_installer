@@ -1,8 +1,14 @@
-## This repository holds a conan recipe for Bazel.
+## This repository holds a conan recipe for the Bazel Build system from Google.
 
 [Conan.io](https://conan.io) package for [Bazel](https://github.com/bazelbuild/bazel) project
 
 The packages generated with this **conanfile** can be found in [Bintray](https://bintray.com/bincrafters/public-conan/bazel_installer%3Abincrafters).
+
+Bazel is an open-source build system released by Google which is written in Java, and effectively required to build all of their open-source C++ libraries.  While many C++ developers may want to utilize Google's C++ libraries, Bazel presents some challenges.  For example, most C++ developers outside of Google have never used Bazel.  Also, many C++ developers may not have a suitable Java version installed.  Thus, the overall proposition of Bazel is regarded as unreasonable by some, and in many cases passed over by those who were initially interested.  The "overall proposition of bazel" including the requirement of installing Java (which is disagreeable to some), in order to install Bazel (which they'll have to learn from scratch just to utilize a few Google projects). 
+
+This Conan.io package aims to make it trivial for C++ developers to incorporate Googles C++ libraries in their projects, by removing the need for the developer to deal with anything related to Bazel. 
+
+This package contains pre-built binaries of Bazel for Windows, Mac, and Linux, and includes an option to include an embedded JDK if the local machine does have a suitable version already.  It intended to serve as a building block for future packages which will contain Google's open-source C++ libraries.  These future Conan packages will reference this package as a `build_requirement`. This means that whenever one of these other Google libraries needs to be compiled, Bazel will be automatically downloaded and used to perform the build. This download will only occur once for the machine however, and Bazel will be cached in the local Conan cache for reuse. 
 
 ## For Users: Use this package
 
