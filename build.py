@@ -24,7 +24,7 @@ if __name__ == "__main__":
     builder.add_common_builds()
     filtered_builds = []
     for settings, options, env_vars, build_requires in builder.builds:
-        if not options["with_jdk"]:
+        if not options["bazel_installer:with_jdk"]:
              filtered_builds.append([settings, options, env_vars, build_requires])
     builder.builds = filtered_builds
     builder.run()
