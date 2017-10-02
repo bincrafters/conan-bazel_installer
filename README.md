@@ -24,12 +24,15 @@ This package has the following custom package options:
 
 |Package        |Option Name		| Default Value   | Possible Value    
 |----------------|--------------------|-------------------|------------------
-|All				|with_jdk	        | True                | True/False         
+|All				|with_jdk	        | False                | True/False         
 
+`with_jdk` - The current default of true means that the package will download the Bazel binary which contains an embedded JDK. This can add significant convenience in many cases.  However, this adds approximately 60-70 MB to the size of the download, which is inefficient if you already have Java installed.  If this option is set to `False` Bazel must be able to find an appropriate version of the JDK pre-installed for Bazel to work, most likely via `JAVA_HOME` environment variable.  Conan options can be set in multiple places such as *conanfile.txt* and *conanfile.py*, or passed at the CLI when running `conan install ..` for example:  
 
-`with_jdk` - The current default of true means that the package will download the Bazel binary which contains an embedded JDK. This can add significant convenience in many cases.  However, this adds approximately 60-70 MB to the size of the download, which is inefficient if you already have Java installed.  If this option is set to `False` Bazel must be able to find an appropriate version of the JDK pre-installed for Bazel to work, most likely via `JAVA_HOME` environment variable.  Conan options can be set in multiple places such as *conanfile.txt* and *conanfile.py*, or passed at the CLI when running `conan install ..`, for example:  
-
-    $ conan install bazel_installer/0.6.0@bincrafters/testing -o bazel_installer:with_jdk=False
+    $ conan install bazel_installer/0.6.0@bincrafters/stable -o bazel_installer:with_jdk=False
+	
+Or, alternatively if running commands for a Google C++ library such as Abseil which references the `bazel_installer` package as a dependency, you can still pass the option for the `bazel_installer` the same way: 
+	
+    $ conan install Abseil/latest@bincrafters/stable -o bazel_installer:with_jdk=False
 
 The complete list of Bazel binaries can be found here:  https://github.com/bazelbuild/bazel/releases
 
