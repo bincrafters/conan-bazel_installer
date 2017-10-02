@@ -23,6 +23,10 @@ This package has the following custom package options:
 
 The complete list of Bazel binaries can be found here:  https://github.com/bazelbuild/bazel/releases
 
+### Additional Notes
+
+When installing on Debian Linux, this package requires the standard linux package to be added: `unzip`.  Conan has the capability of installing this via it's "system_requirements" feature, however in this particular case, we've opted not to include that in the Conan recipe, leaving it to the user to install separately.  This is in part due to the fact that the error message produced by Bazel is very clear and indicates what the user must do.  
+
 ### Project setup
 
 If you handle multiple dependencies in your project is better to add a *conanfile.txt*
