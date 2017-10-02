@@ -63,9 +63,10 @@ class BazelInstallerConan(ConanFile):
             self.run("./bazel.sh --prefix={0} --bin=%prefix%/bin --base=%prefix%/lib/bazel".format(os.getcwd()))
             
     def package(self):
-        bin_dir = "." if os_info.is_windows else "bin"
-        self.copy(pattern="bazel*", dst="bin", src=bin_dir, symlinks=True)
-        self.copy(pattern="*", dst="lib", src="lib", symlinks=True)
+        if os_info.is_windows:
+            self.copy(pattern="bazel*", dst="bin", src=".")
+        else:
+            self.copy(pattern="bazel*", dst="bin", src="lib/bazel/bin")
         
     def package_info(self):
         bin_path = os.path.join(self.package_folder, "bin")
