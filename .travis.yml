@@ -30,12 +30,7 @@ matrix:
       - <<: *osx
         osx_image: xcode8.3
         env: CONAN_APPLE_CLANG_VERSIONS=8.1
-
-addons:
-  apt:
-    packages:
-    - unzip
-  
+          
 install:
   - chmod +x .travis/install.sh
   - ./.travis/install.sh
