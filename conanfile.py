@@ -6,7 +6,7 @@ class BazelInstallerConan(ConanFile):
     name = "bazel_installer"
     version = "0.6.0"
     url = "https://github.com/bincrafters/conan-bazel_installer"
-    description = "Abseil Common Libraries (C++) from Google"
+    description = "The Bazel Build system from Google"
     license = "https://github.com/bazelbuild/bazel/blob/master/LICENSE"
     settings = "os"
     options = {"with_jdk": [True, False]}
