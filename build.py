@@ -22,4 +22,9 @@ if __name__ == "__main__":
     os.environ["CONAN_REMOTES"]="https://api.bintray.com/conan/conan-community/conan"
     builder = ConanMultiPackager(args="--build missing")
     builder.add_common_builds()
+    filtered_builds = []
+    for settings, options, env_vars, build_requires in builder.builds:
+        if not options["with_jdk"]:
+             filtered_builds.append([settings, options, env_vars, build_requires])
+    builder.builds = filtered_builds
     builder.run()
