@@ -10,7 +10,7 @@ class BazelInstallerConan(ConanFile):
     license = "https://github.com/bazelbuild/bazel/blob/master/LICENSE"
     settings = "os"
     options = {"with_jdk": [True, False]}
-    default_options = "with_jdk=False"
+    default_options = "with_jdk=True"
     
     def system_requirements(self):
         if os_info.linux_distro == "ubuntu":
