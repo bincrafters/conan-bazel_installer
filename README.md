@@ -9,6 +9,19 @@ The packages generated with this **conanfile** can be found in [Bintray](https:/
 ### Basic setup
 
     $ conan install bazel_installer/0.6.0@bincrafters/stable
+	
+### Custom Package Options
+
+This package has the following custom package options: 
+
+|Package        |Option Name		| Default Value   | Possible Value    
+|----------------|--------------------|-------------------|------------------
+|All				|with_jdk	        | False                | True/False         
+
+
+`with_jdk` - If set to true, the package will download the Bazel binary containing an embedded JDK.  This adds approximately 60-70 MB to it's size. 
+
+The complete list of Bazel binaries can be found here:  https://github.com/bazelbuild/bazel/releases
 
 ### Project setup
 
@@ -43,4 +56,3 @@ The following command both runs all the steps of the conan file, and publishes t
 ## Upload
 
     $ conan upload bazel_installer/0.6.0@bincrafters/stable --all -r bincrafters
-	

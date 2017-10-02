@@ -9,8 +9,8 @@ class BazelInstallerConan(ConanFile):
     description = "Abseil Common Libraries (C++) from Google"
     license = "https://github.com/bazelbuild/bazel/blob/master/LICENSE"
     settings = "os"
-    options = {"without_jdk": [True, False]}
-    default_options = "without_jdk=True"
+    options = {"with_jdk": [True, False]}
+    default_options = "with_jdk=False"
 
     def source(self):
         name_and_version = "bazel-{0}".format(self.version)
@@ -18,7 +18,7 @@ class BazelInstallerConan(ConanFile):
         
         bin_filename = name_and_version
            
-        if self.options.without_jdk:
+        if not self.options.with_jdk:
             bin_filename += "-without-jdk-"
         
         arch_segment = "x86_64"
