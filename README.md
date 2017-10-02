@@ -60,7 +60,7 @@ The example below shows the commands used to publish to bincrafters conan reposi
 
 The following command both runs all the steps of the conan file, and publishes the package to the local system cache.  This includes downloading dependencies from `build_requires` and `requires` , and then running the `build()` method. 
 
-    $ conan create bincrafters/stable
+    $ conan create bincrafters/testing
 	
 ## Add Remote
 
