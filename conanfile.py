@@ -23,9 +23,11 @@ class BazelInstallerConan(ConanFile):
         
         bin_filename = name_and_version
            
-        if not self.options.with_jdk:
+        if self.options.with_jdk:
+            bin_filename += "-"
+        else: 
             bin_filename += "-without-jdk-"
-        
+            
         arch_segment = "x86_64"
         
         if os_info.is_windows:
