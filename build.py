@@ -21,7 +21,8 @@ if __name__ == "__main__":
         os.environ["CONAN_REFERENCE"] = "{0}/{1}".format(name, version)
         os.environ["CONAN_UPLOAD"]="https://api.bintray.com/conan/{0}/public-conan".format(username)
         os.environ["CONAN_REMOTES"]="https://api.bintray.com/conan/conan-community/conan"
-        
-    builder = ConanMultiPackager(args="--build missing")
-    builder.add_common_builds()
+
+    builder = ConanMultiPackager()
+    builder.add({"os" : platform.system()}, {"with_jdk" : True}, {}, {}) 
+    builder.add({"os" : platform.system()}, {"with_jdk" : False}, {}, {}) 
     builder.run()
