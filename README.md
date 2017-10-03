@@ -1,5 +1,8 @@
 ## This repository holds a conan recipe for the Bazel Build system from Google.
 
+[![Appveyor Status](https://ci.appveyor.com/api/projects/status/e860aeoe6bij7ccy/branch/testing%2F0.6.0?svg=true)](https://ci.appveyor.com/project/BinCrafters/conan-bazel-installer/testing%2F0.6.0)
+[![Travis Status](https://travis-ci.org/bincrafters/conan-bazel_installer.svg?branch=testing%2F0.6.0)](https://travis-ci.org/bincrafters/conan-bazel_installer)
+
 [Conan.io](https://conan.io) package for [Bazel](https://github.com/bazelbuild/bazel) project
 
 The packages generated with this **conanfile** can be found in [Bintray](https://bintray.com/bincrafters/public-conan/bazel_installer%3Abincrafters).
