@@ -1,5 +1,5 @@
 from conan.packager import ConanMultiPackager, os, re
-
+import platform
     
 if __name__ == "__main__":
     reponame_a = os.getenv("APPVEYOR_REPO_NAME","")
