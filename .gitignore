@@ -35,6 +35,7 @@ init.bat
 upload.bat
 build*/
 bin*
+*.pyc
 .vs
 .vscode*
 conaninfo.txt
