@@ -25,9 +25,9 @@ Because this package is intended to be used as a `build_requirement` in other pa
 
 This package has the following custom package options: 
 
-|Package        |Option Name		| Default Value   | Possible Value    
-|----------------|--------------------|-------------------|------------------
-|All				|with_jdk	        | False                | True/False         
+|Option Name	| Default Value   | Possible Value    
+|-----------------|------------------|------------------
+|with_jdk	        | False               | True/False         
 
 `with_jdk` - The current default of true means that the package will download the Bazel binary which contains an embedded JDK. This can add significant convenience in many cases.  However, this adds approximately 60-70 MB to the size of the download, which is inefficient if you already have Java installed.  If this option is set to `False` Bazel must be able to find an appropriate version of the JDK pre-installed for Bazel to work, most likely via `JAVA_HOME` environment variable.  Conan options can be set in multiple places such as *conanfile.txt* and *conanfile.py*, or passed at the CLI when running `conan install ..` for example:  
 
