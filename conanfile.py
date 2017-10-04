@@ -16,18 +16,23 @@ class BazelInstallerConan(ConanFile):
         if os_info.linux_distro == "ubuntu":
             installer = SystemPackageTool()
             installer.install("unzip")
-
+            
+    def build_requirements(self):
+        if self.options.with_jdk:
+            self.build_requires("java_installer/8.0.144@bincrafters/testing")
+            
     def source(self):
         name_and_version = "bazel-{0}".format(self.version)
         base_url = "https://github.com/bazelbuild/bazel/releases/download/{0}".format(self.version)
         
         bin_filename = name_and_version
            
-        if self.options.with_jdk:
-            bin_filename += "-"
-        else: 
-            bin_filename += "-without-jdk-"
-            
+        bin_filename += "-" # added for testing jdk as build_requires
+        # if self.options.with_jdk:
+            # bin_filename += "-"
+        # else: 
+            # bin_filename += "-without-jdk-"
+        
         arch_segment = "x86_64"
         
         if os_info.is_windows:
@@ -67,7 +72,7 @@ class BazelInstallerConan(ConanFile):
             self.copy(pattern="bazel*", dst="bin", src=".")
         else:
             self.copy(pattern="bazel*", dst="bin", src="lib/bazel/bin")
-        
+            
     def package_info(self):
         bin_path = os.path.join(self.package_folder, "bin")
         self.output.info("Appending PATH environment variable with : {0}".format(bin_path))
