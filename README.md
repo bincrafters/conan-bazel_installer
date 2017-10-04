@@ -17,6 +17,8 @@ This package contains pre-built binaries of Bazel for Windows, Mac, and Linux, a
 
 Because this package is intended to be used as a `build_requirement` in other package recipes, most users won't need to install this package directly.  However, most users should be aware of how to pass the the custom package option of `with_jdk` to Conan as described below. 
 
+** Important Note : currently this package is limited to x86_64 architectures.  It will soon feature support for building from source for other architectures, but this is a known limitation. ** 
+
 ### Basic setup
 
     $ conan install bazel_installer/0.6.0@bincrafters/stable
