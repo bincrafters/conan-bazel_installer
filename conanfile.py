@@ -17,16 +17,21 @@ class BazelInstallerConan(ConanFile):
             installer = SystemPackageTool()
             installer.install("unzip")
             
+    def build_requirements(self):
+        if self.options.with_jdk:
+            self.build_requires("java_installer/8.0.144@bincrafters/stable")
+            
     def source(self):
         name_and_version = "bazel-{0}".format(self.version)
         base_url = "https://github.com/bazelbuild/bazel/releases/download/{0}".format(self.version)
         
         bin_filename = name_and_version
            
-        if self.options.with_jdk:
-            bin_filename += "-"
-        else: 
-            bin_filename += "-without-jdk-"
+        bin_filename += "-" # added for testing jdk as build_requires
+        # if self.options.with_jdk:
+            # bin_filename += "-"
+        # else: 
+            # bin_filename += "-without-jdk-"
         
         arch_segment = "x86_64"
         
