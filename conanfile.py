@@ -8,7 +8,7 @@ class BazelInstallerConan(ConanFile):
     url = "https://github.com/bincrafters/conan-bazel_installer"
     description = "The Bazel Build system from Google"
     license = "https://github.com/bazelbuild/bazel/blob/master/LICENSE"
-    settings = "os"
+    settings = "os", "arch"
     options = {"with_jdk": [True, False]}
     default_options = "with_jdk=True"
     
