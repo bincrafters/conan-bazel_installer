@@ -8,7 +8,7 @@ class BazelInstallerConan(ConanFile):
     url = "https://github.com/bincrafters/conan-bazel_installer"
     description = "The Bazel Build system from Google"
     license = "https://github.com/bazelbuild/bazel/blob/master/LICENSE"
-    settings = "os"
+    settings = "os", "arch"
     options = {"with_jdk": [True, False]}
     default_options = "with_jdk=True"
     
@@ -18,7 +18,7 @@ class BazelInstallerConan(ConanFile):
             installer.install("unzip")
         
         if self.settings.arch != "x86_64":
-            raise Exception("Unsupported Architecture %s .  Bazel currently only has releases for x86_64" % self.settings.arch)
+            raise Exception("Unsupported Architecture %s .  Bazel currently only has releases " % self.settings.arch)
     
         #TODO: add compile from source for other architectures.
     
