@@ -32,11 +32,7 @@ class BazelInstallerConan(ConanFile):
         
         bin_filename = name_and_version
            
-        bin_filename += "-" # added for testing jdk as build_requires
-        # if self.options.with_jdk:
-            # bin_filename += "-"
-        # else: 
-            # bin_filename += "-without-jdk-"
+        bin_filename += "-"
         
         arch_segment = "x86_64"
         
@@ -85,3 +81,6 @@ class BazelInstallerConan(ConanFile):
         bin_path = os.path.join(self.package_folder, "bin")
         self.output.info("Appending PATH environment variable with : {0}".format(bin_path))
         self.env_info.path.append(bin_path)
+
+    def package_id(self):
+        self.info.options.with_jdk = "any" 
