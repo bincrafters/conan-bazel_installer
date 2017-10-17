@@ -1,5 +1,6 @@
-from conans import ConanFile, tools, os 
+from conans import ConanFile, tools
 from conans.tools import os_info, SystemPackageTool
+import os 
 
 
 class BazelInstallerConan(ConanFile):

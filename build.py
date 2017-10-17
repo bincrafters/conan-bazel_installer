@@ -1,5 +1,5 @@
-from conan.packager import ConanMultiPackager, os, re
-import platform
+from conan.packager import ConanMultiPackager
+import os, re, platform
     
 if __name__ == "__main__":
     reponame_a = os.getenv("APPVEYOR_REPO_NAME","")
@@ -23,6 +23,5 @@ if __name__ == "__main__":
         os.environ["CONAN_REMOTES"]="https://api.bintray.com/conan/{0}/public-conan".format(username)
 
     builder = ConanMultiPackager()
-    builder.add({"os" : platform.system().replace("Darwin", "Macos"), "arch" : "x86_64"}, {"bazel_installer:with_jdk" : True}, {}, {}) 
     builder.add({"os" : platform.system().replace("Darwin", "Macos"), "arch" : "x86_64"}, {"bazel_installer:with_jdk" : False}, {}, {}) 
     builder.run()
