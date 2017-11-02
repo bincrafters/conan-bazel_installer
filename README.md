@@ -46,7 +46,7 @@ The complete list of Bazel binaries can be found here:  https://github.com/bazel
 If you handle multiple dependencies in your project is better to add a *conanfile.txt*
 
     [requires]
-    bazel_installer/0.6.0@bincrafters/testing
+    bazel_installer/0.6.0@bincrafters/stable
 
     [generators]
     txt
@@ -65,7 +65,7 @@ The example below shows the commands used to publish to bincrafters conan reposi
 
 The following command both runs all the steps of the conan file, and publishes the package to the local system cache.  This includes downloading dependencies from `build_requires` and `requires` , and then running the `build()` method. 
 
-    $ conan create bincrafters/testing
+    $ conan create bincrafters/stable
 	
 ## Add Remote
 
