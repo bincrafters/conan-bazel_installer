@@ -5,7 +5,7 @@ import os
 
 class BazelInstallerConan(ConanFile):
     name = "bazel_installer"
-    version = "0.6.0"
+    version = "0.7.0"
     url = "https://github.com/bincrafters/conan-bazel_installer"
     description = "The Bazel Build system from Google"
     license = "https://github.com/bazelbuild/bazel/blob/master/LICENSE"
@@ -47,7 +47,9 @@ class BazelInstallerConan(ConanFile):
                 os_segment = "installer-darwin"
             ext = "sh"
         
-        bin_filename += "{0}-{1}.{2}".format(os_segment, arch_segment, ext)
+        # Below we always use the without-jdk binaries because we use java_installer 
+        # conan package as a build requires when user chooses with_jdk. 
+        bin_filename += "without-jdk-{0}-{1}.{2}".format(os_segment, arch_segment, ext)
         sha_filename = bin_filename + ".sha256"
         
         bin_url = "{0}/{1}".format(base_url, bin_filename)

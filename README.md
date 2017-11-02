@@ -1,5 +1,5 @@
-[![Appveyor Status](https://ci.appveyor.com/api/projects/status/e860aeoe6bij7ccy/branch/stable%2F0.6.0?svg=true)](https://ci.appveyor.com/project/BinCrafters/conan-bazel-installer/stable%2F0.6.0)
-[![Travis Status](https://travis-ci.org/bincrafters/conan-bazel_installer.svg?branch=stable%2F0.6.0)](https://travis-ci.org/bincrafters/conan-bazel_installer)
+[![Appveyor Status](https://ci.appveyor.com/api/projects/status/e860aeoe6bij7ccy/branch/stable%2F0.7.0?svg=true)](https://ci.appveyor.com/project/BinCrafters/conan-bazel-installer/stable%2F0.7.0)
+[![Travis Status](https://travis-ci.org/bincrafters/conan-bazel_installer.svg?branch=stable%2F0.7.0)](https://travis-ci.org/bincrafters/conan-bazel_installer)
 
 ## This repository holds a conan recipe for the Bazel Build system from Google.
 
@@ -21,7 +21,7 @@ Because this package is intended to be used as a `build_requirement` in other pa
 
 ### Basic setup
 
-    $ conan install bazel_installer/0.6.0@bincrafters/stable
+    $ conan install bazel_installer/0.7.0@bincrafters/stable
 	
 ### Custom Package Options
 
@@ -33,7 +33,7 @@ This package has the following custom package options:
 
 `with_jdk` - The current default of true means that the package will download the Bazel binary which contains an embedded JDK. This can add significant convenience in many cases.  However, this adds approximately 60-70 MB to the size of the download, which is inefficient if you already have Java installed.  If this option is set to `False` Bazel must be able to find an appropriate version of the JDK pre-installed for Bazel to work, most likely via `JAVA_HOME` environment variable.  Conan options can be set in multiple places such as *conanfile.txt* and *conanfile.py*, or passed at the CLI when running `conan install ..` for example:  
 
-    $ conan install bazel_installer/0.6.0@bincrafters/stable -o bazel_installer:with_jdk=False
+    $ conan install bazel_installer/0.7.0@bincrafters/stable -o bazel_installer:with_jdk=False
 	
 Or, alternatively if running commands for a Google C++ library such as Abseil which references the `bazel_installer` package as a dependency, you can still pass the option for the `bazel_installer` the same way: 
 	
@@ -46,7 +46,7 @@ The complete list of Bazel binaries can be found here:  https://github.com/bazel
 If you handle multiple dependencies in your project is better to add a *conanfile.txt*
 
     [requires]
-    bazel_installer/0.6.0@bincrafters/stable
+    bazel_installer/0.7.0@bincrafters/stable
 
     [generators]
     txt
@@ -73,4 +73,4 @@ The following command both runs all the steps of the conan file, and publishes t
 
 ## Upload
 
-    $ conan upload bazel_installer/0.6.0@bincrafters/stable --all -r bincrafters
+    $ conan upload bazel_installer/0.7.0@bincrafters/stable --all -r bincrafters
