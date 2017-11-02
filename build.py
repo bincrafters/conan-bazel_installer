@@ -1,7 +1,6 @@
 from conan.packager import ConanMultiPackager
 import os, re, platform
 
-
 def get_value_from_recipe(search_string):
     with open("conanfile.py", "r") as conanfile:
         contents = conanfile.read()

@@ -1,6 +1,6 @@
 from conans import ConanFile, tools
 from conans.tools import os_info, SystemPackageTool
-import os
+import os 
 
 
 class BazelInstallerConan(ConanFile):
@@ -23,7 +23,6 @@ class BazelInstallerConan(ConanFile):
             installer = SystemPackageTool()
             installer.install("unzip")
         
-    
     def build_requirements(self):
         if self.options.with_jdk:
             self.build_requires("java_installer/8.0.144@bincrafters/stable")
@@ -34,7 +33,7 @@ class BazelInstallerConan(ConanFile):
         
         bin_filename = name_and_version
            
-        bin_filename += "-"
+        bin_filename += "-" 
         
         arch_segment = "x86_64"
         

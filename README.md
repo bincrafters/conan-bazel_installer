@@ -2,6 +2,7 @@
 [![Travis Status](https://travis-ci.org/bincrafters/conan-bazel_installer.svg?branch=stable%2F0.6.0)](https://travis-ci.org/bincrafters/conan-bazel_installer)
 
 ## This repository holds a conan recipe for the Bazel Build system from Google.
+
 [Conan.io](https://conan.io) package for [Bazel](https://github.com/bazelbuild/bazel) project
 
 The packages generated with this **conanfile** can be found in [Bintray](https://bintray.com/bincrafters/public-conan/bazel_installer%3Abincrafters).
@@ -45,7 +46,7 @@ The complete list of Bazel binaries can be found here:  https://github.com/bazel
 If you handle multiple dependencies in your project is better to add a *conanfile.txt*
 
     [requires]
-    bazel_installer/0.6.0@bincrafters/stable
+    bazel_installer/0.6.0@bincrafters/testing
 
     [generators]
     txt
@@ -64,7 +65,7 @@ The example below shows the commands used to publish to bincrafters conan reposi
 
 The following command both runs all the steps of the conan file, and publishes the package to the local system cache.  This includes downloading dependencies from `build_requires` and `requires` , and then running the `build()` method. 
 
-    $ conan create bincrafters/stable
+    $ conan create bincrafters/testing
 	
 ## Add Remote
 
