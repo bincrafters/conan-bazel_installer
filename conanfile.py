@@ -1,5 +1,6 @@
-from conans import ConanFile, tools, os 
+from conans import ConanFile, tools
 from conans.tools import os_info, SystemPackageTool
+import os
 
 
 class BazelInstallerConan(ConanFile):
@@ -11,22 +12,23 @@ class BazelInstallerConan(ConanFile):
     settings = "os", "arch"
     options = {"with_jdk": [True, False]}
     default_options = "with_jdk=True"
-    
+
+    def config_options(self):    
+        if self.settings.arch != "x86_64":
+            raise Exception("Unsupported Architecture.  This package currently only supports x86_64.")
+            #TODO: add compile from source for other architectures.
+           
     def system_requirements(self):
         if os_info.linux_distro == "ubuntu":
             installer = SystemPackageTool()
             installer.install("unzip")
         
-        if self.settings.arch != "x86_64":
-            raise Exception("Unsupported Architecture %s .  Bazel currently only has releases " % self.settings.arch)
-    
-        #TODO: add compile from source for other architectures.
     
     def build_requirements(self):
         if self.options.with_jdk:
             self.build_requires("java_installer/8.0.144@bincrafters/stable")
             
-    def source(self):
+    def build(self):
         name_and_version = "bazel-{0}".format(self.version)
         base_url = "https://github.com/bazelbuild/bazel/releases/download/{0}".format(self.version)
         
@@ -63,7 +65,6 @@ class BazelInstallerConan(ConanFile):
 
         os.rename(bin_filename, "bazel.{0}".format(ext))
     
-    def build(self):
         if not os_info.is_windows:
             # This downloads a prebuilt installer and extracts, does not build from scratch
             self.run("chmod +x bazel.sh")
