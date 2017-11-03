@@ -19,8 +19,8 @@ class BazelInstallerConan(ConanFile):
             #TODO: add compile from source for other architectures.
 
     def configure(self):    
-        if not self.options.with_jdk and os.getenv("JAVA_HOME","") == "":
-            raise Exception("JAVA_HOME variable not found. This package requires a valid JAVA_HOME variable.")
+        if not tools.which("javac")
+            raise Exception("javac not found on classpath. Please ensure a java installation exists on your PATH.")
            
     def system_requirements(self):
         if os_info.linux_distro == "ubuntu":
@@ -74,9 +74,7 @@ class BazelInstallerConan(ConanFile):
             # This downloads a prebuilt installer and extracts, does not build from scratch
             self.run("chmod +x bazel.sh")
             self.run("./bazel.sh --prefix={0} --bin=%prefix%/bin --base=%prefix%/lib/bazel".format(os.getcwd()))
-        
-        #TODO: add compile from source for other architectures. 
-        
+               
     def package(self):
         if os_info.is_windows:
             self.copy(pattern="bazel*", dst="bin", src=".")
