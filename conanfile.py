@@ -17,6 +17,10 @@ class BazelInstallerConan(ConanFile):
         if self.settings.arch != "x86_64":
             raise Exception("Unsupported Architecture.  This package currently only supports x86_64.")
             #TODO: add compile from source for other architectures.
+
+    def configure(self):    
+        if not self.options.with_jdk and os.getenv("JAVA_HOME","") == "":
+            raise Exception("JAVA_HOME variable not found. This package requires a valid JAVA_HOME variable.")
            
     def system_requirements(self):
         if os_info.linux_distro == "ubuntu":
