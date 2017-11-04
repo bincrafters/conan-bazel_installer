@@ -19,7 +19,8 @@ class BazelInstallerConan(ConanFile):
             #TODO: add compile from source for other architectures.
 
     def configure(self):    
-        if not tools.which("javac")
+        print(tools.which("javac"))
+        if not tools.which("javac"):
             raise Exception("javac not found on classpath. Please ensure a java installation exists on your PATH.")
            
     def system_requirements(self):
