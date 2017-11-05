@@ -1,3 +1,4 @@
+[ ![Download](https://api.bintray.com/packages/bincrafters/public-conan/bazel_installer%3Abincrafters/images/download.svg?version=0.6.0%3Astable) ](https://bintray.com/bincrafters/public-conan/bazel_installer%3Abincrafters/0.6.0%3Astable/link)
 [![Appveyor Status](https://ci.appveyor.com/api/projects/status/e860aeoe6bij7ccy/branch/stable%2F0.7.0?svg=true)](https://ci.appveyor.com/project/BinCrafters/conan-bazel-installer/stable%2F0.7.0)
 [![Travis Status](https://travis-ci.org/bincrafters/conan-bazel_installer.svg?branch=stable%2F0.7.0)](https://travis-ci.org/bincrafters/conan-bazel_installer)
 
