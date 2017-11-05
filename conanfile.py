@@ -25,7 +25,7 @@ class BazelInstallerConan(ConanFile):
         
     def requirements(self):
         if self.options.with_jdk:
-            self.requirements("java_installer/8.0.144@bincrafters/stable")
+            self.requires("java_installer/8.0.144@bincrafters/stable")
     
     def build(self):
         name_and_version = "bazel-{0}".format(self.version)
