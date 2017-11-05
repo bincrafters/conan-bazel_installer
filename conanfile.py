@@ -28,7 +28,7 @@ class BazelInstallerConan(ConanFile):
             self.build_requires("java_installer/8.0.144@bincrafters/stable")
     
         javac = "javac.exe" if os_info.is_windows else "javac"
-        self.output.info("javac path = " + str(tools.which(javac)))
+        self.output.info(javac + " path = " + str(tools.which(javac)))
         if not tools.which(javac):
             raise Exception("javac not found on classpath. Please ensure a java installation exists on your PATH.")
         
