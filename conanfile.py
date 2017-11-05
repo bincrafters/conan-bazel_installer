@@ -17,13 +17,7 @@ class BazelInstallerConan(ConanFile):
         if self.settings.arch != "x86_64":
             raise Exception("Unsupported Architecture.  This package currently only supports x86_64.")
             #TODO: add compile from source for other architectures.
-
-    def configure(self):    
-        javac = "javac.exe" if os_info.is_windows else "javac"
-        self.output.info("javac path = " + str(tools.which(javac)))
-        if not tools.which(javac):
-            raise Exception("javac not found on classpath. Please ensure a java installation exists on your PATH.")
-           
+          
     def system_requirements(self):
         if os_info.linux_distro == "ubuntu":
             installer = SystemPackageTool()
@@ -32,7 +26,12 @@ class BazelInstallerConan(ConanFile):
     def build_requirements(self):
         if self.options.with_jdk:
             self.build_requires("java_installer/8.0.144@bincrafters/stable")
-            
+    
+        javac = "javac.exe" if os_info.is_windows else "javac"
+        self.output.info("javac path = " + str(tools.which(javac)))
+        if not tools.which(javac):
+            raise Exception("javac not found on classpath. Please ensure a java installation exists on your PATH.")
+        
     def build(self):
         name_and_version = "bazel-{0}".format(self.version)
         base_url = "https://github.com/bazelbuild/bazel/releases/download/{0}".format(self.version)
