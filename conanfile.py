@@ -23,15 +23,10 @@ class BazelInstallerConan(ConanFile):
             installer = SystemPackageTool()
             installer.install("unzip")
         
-    def build_requirements(self):
+    def requirements(self):
         if self.options.with_jdk:
-            self.build_requires("java_installer/8.0.144@bincrafters/stable")
+            self.requirements("java_installer/8.0.144@bincrafters/stable")
     
-        javac = "javac.exe" if os_info.is_windows else "javac"
-        self.output.info(javac + " path = " + str(tools.which(javac)))
-        if not tools.which(javac):
-            raise Exception("javac not found on classpath. Please ensure a java installation exists on your PATH.")
-        
     def build(self):
         name_and_version = "bazel-{0}".format(self.version)
         base_url = "https://github.com/bazelbuild/bazel/releases/download/{0}".format(self.version)
