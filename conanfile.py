@@ -1,11 +1,13 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
 from conans import ConanFile, tools
-from conans.tools import os_info, SystemPackageTool
 import os 
 
 
 class BazelInstallerConan(ConanFile):
     name = "bazel_installer"
-    version = "0.6.0"
+    version = "0.7.0"
     url = "https://github.com/bincrafters/conan-bazel_installer"
     description = "The Bazel Build system from Google"
     license = "https://github.com/bazelbuild/bazel/blob/master/LICENSE"
@@ -13,69 +15,43 @@ class BazelInstallerConan(ConanFile):
     options = {"with_jdk": [True, False]}
     default_options = "with_jdk=True"
 
-    def config_options(self):    
-        if self.settings.arch != "x86_64":
-            raise Exception("Unsupported Architecture.  This package currently only supports x86_64.")
-            #TODO: add compile from source for other architectures.
-          
     def system_requirements(self):
-        if os_info.linux_distro == "ubuntu":
-            installer = SystemPackageTool()
-            installer.install("unzip")
+        if self.settings.os == "Linux":
+            if tools.os_info.linux_distro == "ubuntu":
+                installer = tools.SystemPackageTool()
+                installer.install("unzip")
+
+    def build_requirements(self):
+        if self.settings.os == "Windows":
+            self.build_requires("msys2_installer/latest@%s/%s" % (self.user, self.channel))
         
     def requirements(self):
         if self.options.with_jdk:
-            self.requires("java_installer/8.0.144@bincrafters/stable")
-    
-    def build(self):
-        name_and_version = "bazel-{0}".format(self.version)
-        base_url = "https://github.com/bazelbuild/bazel/releases/download/{0}".format(self.version)
-        
-        bin_filename = name_and_version
-           
-        bin_filename += "-" 
-        
-        arch_segment = "x86_64"
-        
-        if os_info.is_windows:
-            os_segment = "windows"
-            ext = "exe"
-        else:
-            if os_info.is_linux:
-                os_segment = "installer-linux"
-            if os_info.is_macos:
-                os_segment = "installer-darwin"
-            ext = "sh"
-        
-        # Below we always use the without-jdk binaries because we use java_installer 
-        # conan package as a build requires when user chooses with_jdk. 
-        bin_filename += "without-jdk-{0}-{1}.{2}".format(os_segment, arch_segment, ext)
-        sha_filename = bin_filename + ".sha256"
-        
-        bin_url = "{0}/{1}".format(base_url, bin_filename)
-        sha_url = "{0}/{1}".format(base_url, sha_filename)
-        
-        self.output.info("Downloading : {0}".format(sha_url))
-        tools.download(sha_url, sha_filename)
-        
-        self.output.info("Downloading : {0}".format(bin_url))
-        tools.download(bin_url, bin_filename)
-        
-        sha_checksum = tools.load(sha_filename).split(" ")[0]
-        tools.check_sha256(bin_filename, sha_checksum)
+            self.requires("java_installer/8.0.144@%s/%s" % (self.user, self.channel))
 
-        os.rename(bin_filename, "bazel.{0}".format(ext))
-    
-        if not os_info.is_windows:
-            # This downloads a prebuilt installer and extracts, does not build from scratch
-            self.run("chmod +x bazel.sh")
-            self.run("./bazel.sh --prefix={0} --bin=%prefix%/bin --base=%prefix%/lib/bazel".format(os.getcwd()))
+    def build(self):
+        archive_name = "bazel-{0}-dist.zip".format(self.version)
+        url = "https://github.com/bazelbuild/bazel/releases/download/{0}/{1}".format(self.version, archive_name)
+        tools.download(url, archive_name, verify=True)
+        tools.unzip(archive_name)
+        os.unlink(archive_name)
+        if self.settings.os == "Windows":
+            raise Exception("implement MSYS build")
+        else:
+            # fix executable permissions
+            for root, _, files in os.walk('.'):
+                for filename in files:
+                    if filename.endswith('.sh') or filename.endswith('.tpl'):
+                        filepath = os.path.join(root, filename)
+                        os.chmod(filepath, os.stat(filepath).st_mode | 0o111)
+
+            self.run('./compile.sh')
                
     def package(self):
-        if os_info.is_windows:
-            self.copy(pattern="bazel*", dst="bin", src=".")
+        if self.settings.os == "Windows":
+            self.copy(pattern="bazel.exe", dst="bin", src="output")
         else:
-            self.copy(pattern="bazel*", dst="bin", src="lib/bazel/bin")
+            self.copy(pattern="bazel", dst="bin", src="output")
             
     def package_info(self):
         bin_path = os.path.join(self.package_folder, "bin")
@@ -83,4 +59,4 @@ class BazelInstallerConan(ConanFile):
         self.env_info.path.append(bin_path)
 
     def package_id(self):
-        self.info.options.with_jdk = "any" 
+        self.info.options.with_jdk = "any"
