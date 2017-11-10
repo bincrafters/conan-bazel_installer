@@ -14,6 +14,7 @@ class BazelInstallerConan(ConanFile):
     settings = "os", "arch"
     options = {"with_jdk": [True, False]}
     default_options = "with_jdk=True"
+    short_paths = True
 
     def system_requirements(self):
         if self.settings.os == "Linux":
@@ -29,6 +30,11 @@ class BazelInstallerConan(ConanFile):
         if self.options.with_jdk:
             self.requires("java_installer/8.0.144@%s/%s" % (self.user, self.channel))
 
+    def run_in_msys(self, command):
+        with tools.environment_append({'PATH': [self.deps_env_info['msys2_installer'].MSYS_BIN]}):
+            bash = "%MSYS_BIN%\\bash"
+            self.run("{bash} -c ^'{command}'".format(bash=bash, command=command))
+
     def build(self):
         archive_name = "bazel-{0}-dist.zip".format(self.version)
         url = "https://github.com/bazelbuild/bazel/releases/download/{0}/{1}".format(self.version, archive_name)
@@ -36,7 +42,8 @@ class BazelInstallerConan(ConanFile):
         tools.unzip(archive_name)
         os.unlink(archive_name)
         if self.settings.os == "Windows":
-            raise Exception("implement MSYS build")
+            with tools.environment_append({'BAZEL_SH': os.path.join(os.environ['MSYS_BIN'], 'bash.exe')}):
+                self.run_in_msys('./compile.sh')
         else:
             # fix executable permissions
             for root, _, files in os.walk('.'):
