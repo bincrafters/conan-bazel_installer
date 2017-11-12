@@ -24,11 +24,11 @@ class BazelInstallerConan(ConanFile):
 
     def build_requirements(self):
         if self.settings.os == "Windows":
-            self.build_requires("msys2_installer/latest@%s/%s" % (self.user, self.channel))
+            self.build_requires("msys2_installer/latest@bincrafters/stable")
         
     def requirements(self):
         if self.options.with_jdk:
-            self.requires("java_installer/8.0.144@%s/%s" % (self.user, self.channel))
+            self.requires("java_installer/8.0.144@bincrafters/stable")
 
     def run_in_msys(self, command):
         with tools.environment_append({'PATH': [self.deps_env_info['msys2_installer'].MSYS_BIN]}):
