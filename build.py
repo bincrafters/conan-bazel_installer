@@ -57,5 +57,5 @@ if __name__ == "__main__":
         settings={"os" : get_os(), "arch" : "x86_64"}, 
         options={}, 
         env_vars={}, 
-        build_requires={"msys_installer/20161025@bincrafters/stable"}) 
+        build_requires={"*" : ["MyBuildPackage/1.0@lasote/testing"]}) 
     builder.run()
