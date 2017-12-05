@@ -2,48 +2,51 @@
 # -*- coding: utf-8 -*-
 
 from conans import ConanFile, tools
+from conans.errors import ConanException
 import os 
+import platform
 
 
 class BazelInstallerConan(ConanFile):
     name = "bazel_installer"
-    version = "0.7.0"
+    version = "0.8.0"
     url = "https://github.com/bincrafters/conan-bazel_installer"
     description = "The Bazel Build system from Google"
     license = "https://github.com/bazelbuild/bazel/blob/master/LICENSE"
-    settings = "os", "arch"
-    options = {"with_jdk": [True, False]}
-    default_options = "with_jdk=True"
+    settings = {"os" : ["Windows", "Macos", "Linux"], "arch" : ["x86", "x86_64"]}
     short_paths = True
 
+    def config_options(self):
+        # Checking against self.settings.* would prevent cross-building profiles from working
+        if tools.detected_architecture() not in ["x86", "x86_64"]:
+            raise Exception("Unsupported Architecture.  This package currently only supports x86 and x86_64.")
+        if platform.system() not in ["Windows", "Darwin", "Linux"]:
+            raise Exception("Unsupported System. This package currently only support Linux/Darwin/Windows")
+    
     def system_requirements(self):
         if self.settings.os == "Linux":
             if tools.os_info.linux_distro == "ubuntu":
                 installer = tools.SystemPackageTool()
                 installer.install("unzip")
 
-    def build_requirements(self):
-        if self.settings.os == "Windows":
-            self.build_requires("msys2_installer/latest@bincrafters/stable")
-        
-    def requirements(self):
-        if self.options.with_jdk:
-            self.requires("java_installer/8.0.144@bincrafters/stable")
-
-    def run_in_msys(self, command):
-        with tools.environment_append({'PATH': [self.deps_env_info['msys2_installer'].MSYS_BIN]}):
-            bash = "%MSYS_BIN%\\bash"
-            self.run("{bash} -c ^'{command}'".format(bash=bash, command=command))
-
     def build(self):
-        archive_name = "bazel-{0}-dist.zip".format(self.version)
-        url = "https://github.com/bazelbuild/bazel/releases/download/{0}/{1}".format(self.version, archive_name)
-        tools.download(url, archive_name, verify=True)
-        tools.unzip(archive_name)
-        os.unlink(archive_name)
         if self.settings.os == "Windows":
-            with tools.environment_append({'BAZEL_SH': os.path.join(os.environ['MSYS_BIN'], 'bash.exe')}):
-                self.run_in_msys('./compile.sh')
+            bash = tools.which("bash.exe")
+            if bash:
+                self.output.info("using bash.exe from: " + bash)
+            else:
+                raise ConanException("No instance of bash.exe could be found on %PATH%")
+
+        source_url = "https://github.com/bazelbuild/bazel"
+        archive_name = "bazel-{0}-dist.zip".format(self.version)
+        url = "{0}/releases/download/{1}/{2}".format(source_url, self.version, archive_name)
+        tools.get(url)
+
+        if self.settings.os == "Windows":
+            bash = tools.which("bash.exe")
+            with tools.environment_append({'BAZEL_SH': bash}):
+                self.run('{bash} -l -c "pacman -S coreutils git curl zip unzip --needed --noconfirm"'.format(bash=bash))
+                self.run('{bash} -c "./compile.sh"'.format(bash=bash))
         else:
             # fix executable permissions
             for root, _, files in os.walk('.'):
@@ -64,6 +67,3 @@ class BazelInstallerConan(ConanFile):
         bin_path = os.path.join(self.package_folder, "bin")
         self.output.info("Appending PATH environment variable with : {0}".format(bin_path))
         self.env_info.path.append(bin_path)
-
-    def package_id(self):
-        self.info.options.with_jdk = "any"
