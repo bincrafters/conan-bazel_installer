@@ -32,12 +32,18 @@ def get_ci_vars():
     username, _ = reponame_a.split("/") if reponame_a else reponame_t.split("/")
     channel, version = repobranch_a.split("/") if repobranch_a else repobranch_t.split("/")
     return username, channel, version
-
+    
 def get_env_vars():
     return get_ci_vars() if is_ci_running() else get_default_vars()
 
 def get_os():
     return platform.system().replace("Darwin", "Macos")
+
+def get_build_requirements():
+    build_requirements = ["java_installer/9.0.0@bincrafters/stable"]
+    if get_os() == "Windows":
+        build_requirements.append("msys2_installer/20161025@bincrafters/stable")
+    return build_requirements
     
 if __name__ == "__main__":
     name = get_name_from_recipe()
@@ -57,5 +63,5 @@ if __name__ == "__main__":
         settings={"os" : get_os(), "arch" : "x86_64"}, 
         options={}, 
         env_vars={}, 
-        build_requires={"*" : ["msys2_installer/20161025@bincrafters/stable"]}) 
+        build_requires={"*" : get_build_requirements()}) 
     builder.run()
