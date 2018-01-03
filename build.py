@@ -28,7 +28,7 @@ def get_module_url():
 
 def get_build_requirements():
     if get_os() == "Windows":
-        build_requirements.append("msys2_installer/20161025@bincrafters/stable")
+        build_requirements = ["msys2_installer/20161025@bincrafters/stable"]
     else:
         build_requirements = ["java_installer/9.0.0@bincrafters/stable"]
     return build_requirements
