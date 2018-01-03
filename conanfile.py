@@ -10,10 +10,11 @@ import platform
 class BazelInstallerConan(ConanFile):
     name = "bazel_installer"
     version = "0.8.0"
-    url = "https://github.com/bincrafters/conan-bazel_installer"
     description = "The Bazel Build system from Google"
-    license = "https://github.com/bazelbuild/bazel/blob/master/LICENSE"
-    settings = {"os" : ["Windows", "Macos", "Linux"], "arch" : ["x86", "x86_64"]}
+    url = "https://github.com/bincrafters/conan-bazel_installer"
+    license = "Apache-2.0"
+    exports = ["LICENSE.md"]
+    settings = "os", "arch"
     short_paths = True
 
     def config_options(self):
