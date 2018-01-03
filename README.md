@@ -2,7 +2,7 @@
 
 | Bintray | Appveyor | Travis | 
 |---------|-----------|--------|
-|[![Download](https://api.bintray.com/packages/bincrafters/public-conan/bazel_installer%3Abincrafters/images/download.svg)](https://bintray.com/bincrafters/public-conan/bazel_installer%3Abincrafters/_latestVersion)|[![Build status](https://ci.appveyor.com/api/projects/status/e860aeoe6bij7ccy?svg=true)](https://ci.appveyor.com/project/BinCrafters/conan-bazel-installer)|[![Build Status](https://travis-ci.org/bincrafters/conan-bazel_installer.svg?branch=stable%2F0.8.1)](https://travis-ci.org/bincrafters/conan-bazel_installer)|
+|[![Download](https://api.bintray.com/packages/bincrafters/public-conan/bazel_installer%3Abincrafters/images/download.svg)](https://bintray.com/bincrafters/public-conan/bazel_installer%3Abincrafters/_latestVersion)|[![Build status](https://ci.appveyor.com/api/projects/status/e860aeoe6bij7ccy?svg=true)](https://ci.appveyor.com/project/BinCrafters/conan-bazel-installer)|[![Build Status](https://travis-ci.org/bincrafters/conan-bazel_installer.svg?branch=stable%2F0.9.0)](https://travis-ci.org/bincrafters/conan-bazel_installer)|
 
 ## Conan.io Information
 
