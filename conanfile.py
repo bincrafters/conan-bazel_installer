@@ -9,7 +9,7 @@ import platform
 
 class BazelInstallerConan(ConanFile):
     name = "bazel_installer"
-    version = "0.9.0"
+    version = "0.15.0"
     description = "The Bazel Build system from Google"
     url = "https://github.com/bincrafters/conan-bazel_installer"
     license = "Apache-2.0"
