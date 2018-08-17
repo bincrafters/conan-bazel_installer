@@ -11,6 +11,7 @@ class BazelInstallerConan(ConanFile):
     name = "bazel_installer"
     version = "0.15.0"
     description = "The Bazel Build system from Google"
+    website = "https://github.com/bazelbuild/bazel"
     url = "https://github.com/bincrafters/conan-bazel_installer"
     license = "Apache-2.0"
     exports = ["LICENSE.md"]
@@ -38,9 +39,8 @@ class BazelInstallerConan(ConanFile):
             else:
                 raise ConanException("No instance of bash.exe could be found on %PATH%")
 
-        source_url = "https://github.com/bazelbuild/bazel"
         archive_name = "bazel-{0}-dist.zip".format(self.version)
-        url = "{0}/releases/download/{1}/{2}".format(source_url, self.version, archive_name)
+        url = "{0}/releases/download/{1}/{2}".format(self.website, self.version, archive_name)
         tools.get(url)
 
         if self.settings.os == "Windows":
