@@ -3,6 +3,7 @@
 
 from conans import ConanFile, tools
 from conans.errors import ConanException
+from conans.errors import ConanInvalidConfiguration
 import os 
 import platform
 
@@ -14,6 +15,9 @@ class BazelInstallerConan(ConanFile):
     website = "https://github.com/bazelbuild/bazel"
     url = "https://github.com/bincrafters/conan-bazel_installer"
     license = "Apache-2.0"
+    topics = ("conan", "bazel", "build", "bzl")
+    homepage = "https://www.bazel.build/"
+    author = "Bincrafters <bincrafters@gmail.com>"
     exports = ["LICENSE.md"]
     settings = "os", "arch"
     short_paths = True
@@ -21,9 +25,9 @@ class BazelInstallerConan(ConanFile):
     def config_options(self):
         # Checking against self.settings.* would prevent cross-building profiles from working
         if tools.detected_architecture() not in ["x86", "x86_64"]:
-            raise Exception("Unsupported Architecture.  This package currently only supports x86 and x86_64.")
+            raise ConanInvalidConfiguration("Unsupported Architecture.  This package currently only supports x86 and x86_64.")
         if platform.system() not in ["Windows", "Darwin", "Linux"]:
-            raise Exception("Unsupported System. This package currently only support Linux/Darwin/Windows")
+            raise ConanInvalidConfiguration("Unsupported System. This package currently only support Linux/Darwin/Windows")
     
     def system_requirements(self):
         if self.settings.os == "Linux":
