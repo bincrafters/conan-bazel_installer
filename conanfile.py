@@ -10,7 +10,7 @@ import platform
 
 class BazelInstallerConan(ConanFile):
     name = "bazel_installer"
-    version = "0.27.1"
+    version = "0.25.2"
     description = "The Bazel Build system from Google"
     website = "https://github.com/bazelbuild/bazel"
     url = "https://github.com/bincrafters/conan-bazel_installer"
@@ -45,7 +45,7 @@ class BazelInstallerConan(ConanFile):
 
         archive_name = "bazel-{0}-dist.zip".format(self.version)
         url = "{0}/releases/download/{1}/{2}".format(self.website, self.version, archive_name)
-        tools.get(url, sha256="8051d77da4ec338acd91770f853e4c25f4407115ed86fd35a6de25921673e779")
+        tools.get(url, sha256="7456032199852c043e6c5b3e4c71dd8089c1158f72ec554e6ec1c77007f0ab51")
 
         if self.settings.os == "Windows":
             bash = tools.which("bash.exe")
