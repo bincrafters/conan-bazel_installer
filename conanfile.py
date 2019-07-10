@@ -35,23 +35,19 @@ class BazelInstallerConan(ConanFile):
                 installer = tools.SystemPackageTool()
                 installer.install("unzip")
 
-    def build(self):
-        if self.settings.os == "Windows":
-            bash = tools.which("bash.exe")
-            if bash:
-                self.output.info("using bash.exe from: " + bash)
-            else:
-                raise ConanException("No instance of bash.exe could be found on %PATH%")
+    def build_requirements(self):
+        if tools.os_info.is_windows and "CONAN_BASH_PATH" not in os.environ:
+            self.build_requires("msys2_installer/latest@bincrafters/stable")
 
+    def build(self):
         archive_name = "bazel-{0}-dist.zip".format(self.version)
         url = "{0}/releases/download/{1}/{2}".format(self.website, self.version, archive_name)
         tools.get(url, sha256="7456032199852c043e6c5b3e4c71dd8089c1158f72ec554e6ec1c77007f0ab51")
 
         if self.settings.os == "Windows":
-            bash = tools.which("bash.exe")
-            with tools.environment_append({'BAZEL_SH': bash}):
-                self.run('{bash} -l -c "pacman -S coreutils git curl zip unzip --needed --noconfirm"'.format(bash=bash))
-                self.run('{bash} -c "./compile.sh"'.format(bash=bash))
+            with tools.environment_append({'BAZEL_SH': os.environ.get("CONAN_BASH_PATH", tools.which("bash"))}):
+                tools.run_in_windows_bash(self, "pacman -S coreutils git curl zip unzip --needed --noconfirm")
+                tools.run_in_windows_bash(self, "./compile.sh")
         else:
             # fix executable permissions
             for root, _, files in os.walk('.'):
@@ -61,7 +57,7 @@ class BazelInstallerConan(ConanFile):
                         os.chmod(filepath, os.stat(filepath).st_mode | 0o111)
 
             self.run('./compile.sh')
-               
+ 
     def package(self):
         if self.settings.os == "Windows":
             self.copy(pattern="bazel.exe", dst="bin", src="output")
