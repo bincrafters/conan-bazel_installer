@@ -38,6 +38,8 @@ class BazelInstallerConan(ConanFile):
     def build_requirements(self):
         if tools.os_info.is_windows and "CONAN_BASH_PATH" not in os.environ:
             self.build_requires("msys2_installer/latest@bincrafters/stable")
+        if not tools.which("javac"):
+            self.build_requires("java_installer/9.0.0@bincrafters/stable")
 
     def build(self):
         archive_name = "bazel-{0}-dist.zip".format(self.version)
