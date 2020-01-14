@@ -26,8 +26,8 @@ class BazelInstallerConan(ConanFile):
             raise ConanInvalidConfiguration("Unsupported System. This package currently only support Linux/Darwin/Windows")
     
     def system_requirements(self):
-        if self.settings.os == "Linux":
-            if tools.os_info.linux_distro == "ubuntu":
+        if tools.os_info.is_linux:
+            if tools.os_info.with_apt:
                 installer = tools.SystemPackageTool()
                 installer.install("unzip")
 
