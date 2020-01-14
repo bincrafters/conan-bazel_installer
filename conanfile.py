@@ -27,7 +27,7 @@ class BazelInstallerConan(ConanFile):
     
     def system_requirements(self):
         if tools.os_info.is_linux:
-            if tools.os_info.with_apt:
+            if tools.os_info.with_apt or tools.os_info.with_yum:
                 installer = tools.SystemPackageTool()
                 installer.install("unzip")
 
@@ -46,8 +46,8 @@ class BazelInstallerConan(ConanFile):
         if self.settings.os == "Windows":
             bash = tools.which("bash.exe")
             with tools.environment_append({'BAZEL_SH': bash}):
-                self.run('{bash} -l -c "pacman -S coreutils git curl zip unzip --needed --noconfirm"'.format(bash=bash))
-                self.run('{bash} -c "./compile.sh"'.format(bash=bash))
+                self.run('"{bash}" -l -c "pacman -S coreutils git curl zip unzip --needed --noconfirm"'.format(bash=bash))
+                self.run('"{bash}" -c "./compile.sh"'.format(bash=bash))
         else:
             # fix executable permissions
             for root, _, files in os.walk('.'):
