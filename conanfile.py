@@ -14,7 +14,6 @@ class BazelInstallerConan(ConanFile):
     license = "Apache-2.0"
     topics = ("conan", "bazel", "build", "bzl")
     homepage = "https://www.bazel.build/"
-    exports = ["LICENSE.md"]
     settings = "os", "arch"
     short_paths = True
 
